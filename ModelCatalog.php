@@ -48,7 +48,7 @@ class ModelCatalog implements ModelCatalogInterface {
             throw new ModelNotFoundException( \sprintf( 'Model "%s" not found.', $modelName ) );
         }
 
-        if(isset($payload['info']['meta']['capabilities'])) { // isset($payload['preset']) && $payload['preset'] === true) {
+        if(isset($payload['info']['meta']['capabilities'])) {
             if ( [] === $payload['info']['meta']['capabilities'] ) {
                 throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
             }
@@ -70,28 +70,7 @@ class ModelCatalog implements ModelCatalogInterface {
 
                 }
             }
-        } /* else {
-            if ( [] === $payload['ollama']['capabilities'] ) {
-                throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
-            }
-            $capabilities = array_map(
-                //                    Capability::OUTPUT_TEXT,
-            //                    Capability::OUTPUT_STREAMING,
-                static fn( string $capability ): Capability => match ( $capability ) {
-                    'embedding' => Capability::EMBEDDINGS,
-                    'completion' => Capability::INPUT_MESSAGES,
-                    'tools' => Capability::TOOL_CALLING,
-                    'thinking' => Capability::THINKING,
-                    'vision' => Capability::INPUT_IMAGE,
-                    //'audio' => Capability::INPUT_AUDIO,
-                    //'insert' => Capability::FILL_IN_THE_MIDDLE,
-                    default => throw new InvalidArgumentException( \sprintf( 'The "%s" capability is not supported',
-                        $capability ) ),
-                },
-                $payload['ollama']['capabilities'],
-            );
-        } */
-
+        }
         if ( \in_array( Capability::INPUT_MESSAGES, $capabilities, true ) ) {
             $capabilities[] = Capability::OUTPUT_TEXT;
             $capabilities[] = Capability::OUTPUT_STREAMING;
