@@ -50,7 +50,7 @@ $result = $platform->invoke('openai/gpt-oss', new MessageBag(
 echo $result->asText();
 ```
 
-The endpoint is fixed at `https://chat.elkoki.net/` — the factory takes no `$endpoint` argument.
+The endpoint is fixed at `https://demo.elkoki.net/` — the factory takes no `$endpoint` argument.
 
 `Factory::createProvider()` returns the bare provider if you want to compose it with other providers
 in your own `Platform` instance. Both factory methods accept an `$apiKey`, a custom

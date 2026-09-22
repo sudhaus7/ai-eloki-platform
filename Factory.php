@@ -50,7 +50,7 @@ class Factory {
         if (null !== $apiKey) {
             $defaultOptions['auth_bearer'] = $apiKey;
         }
-        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://chat.elkoki.net/', $defaultOptions);
+        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://demo.elkoki.net/', $defaultOptions);
         return $httpClient;
     }
 
