@@ -1,7 +1,7 @@
 Eloki Platform
 ==================
 
-[elkoki.net](https://www.elkoki.net/) platform bridge for Symfony AI.
+[eloki.net](https://www.eloki.net/) platform bridge for Symfony AI.
 
 Eloki exposes an OpenAI-compatible chat API in front of an Ollama backend, so this bridge
 combines an OpenAI-shaped request/response contract with Ollama-style option handling and NDJSON
@@ -21,7 +21,7 @@ Installation
 ------------
 
 ```bash
-composer require sudhaus7/ai-elkoki-platform
+composer require sudhaus7/ai-eloki-platform
 ```
 
 Requires PHP 8.2+, `symfony/ai-platform` ^0.12 and `symfony/http-client` ^7.3|^8.0.
@@ -50,7 +50,7 @@ $result = $platform->invoke('openai/gpt-oss', new MessageBag(
 echo $result->asText();
 ```
 
-The endpoint is fixed at `https://demo.elkoki.net/` — the factory takes no `$endpoint` argument.
+The endpoint is fixed at `https://demo.eloki.net/` — the factory takes no `$endpoint` argument.
 
 `Factory::createProvider()` returns the bare provider if you want to compose it with other providers
 in your own `Platform` instance. Both factory methods accept an `$apiKey`, a custom
@@ -130,7 +130,7 @@ means the Eloki server is too old and needs an upgrade.
 Resources
 ---------
 
- * [Eloki](https://www.elkoki.net/)
+ * [Eloki](https://www.eloki.net/)
 
  * [Symfony AI documentation](https://symfony.com/doc/current/ai/index.html)
  * [Symfony AI repository](https://github.com/symfony/ai)

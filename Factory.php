@@ -24,7 +24,7 @@ class Factory {
         ?HttpClientInterface $httpClient = null,
         ?Contract $contract = null,
         ?EventDispatcherInterface $eventDispatcher = null,
-        string $name = 'elkoki',
+        string $name = 'eloki',
     ): ProviderInterface {
 
         $httpClient = self::createHttpClient($httpClient,$apiKey);
@@ -50,7 +50,7 @@ class Factory {
         if (null !== $apiKey) {
             $defaultOptions['auth_bearer'] = $apiKey;
         }
-        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://demo.elkoki.net/', $defaultOptions);
+        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://demo.eloki.net/', $defaultOptions);
         return $httpClient;
     }
 
@@ -62,7 +62,7 @@ class Factory {
         ?HttpClientInterface $httpClient = null,
         ?Contract $contract = null,
         ?EventDispatcherInterface $eventDispatcher = null,
-        string $name = 'elkoki',
+        string $name = 'eloki',
         ?ModelRouterInterface $modelRouter = null,
     ): Platform {
         return new Platform(

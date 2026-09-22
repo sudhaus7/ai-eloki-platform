@@ -48,7 +48,7 @@ class ModelCatalog implements ModelCatalogInterface {
             throw new ModelNotFoundException( \sprintf( 'Model "%s" not found.', $modelName ) );
         }
 
-        if(isset($payload['preset']) && $payload['preset'] === true) {
+        if(isset($payload['info']['meta']['capabilities'])) { // isset($payload['preset']) && $payload['preset'] === true) {
             if ( [] === $payload['info']['meta']['capabilities'] ) {
                 throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
             }
@@ -70,7 +70,7 @@ class ModelCatalog implements ModelCatalogInterface {
 
                 }
             }
-        } else {
+        } /* else {
             if ( [] === $payload['ollama']['capabilities'] ) {
                 throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
             }
@@ -90,7 +90,7 @@ class ModelCatalog implements ModelCatalogInterface {
                 },
                 $payload['ollama']['capabilities'],
             );
-        }
+        } */
 
         if ( \in_array( Capability::INPUT_MESSAGES, $capabilities, true ) ) {
             $capabilities[] = Capability::OUTPUT_TEXT;
