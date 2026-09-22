@@ -1,13 +1,13 @@
 {
-	"name": "sudhaus7/ai-smartbrew-platform",
-	"description": "smartbrew.ai platform bridge for Symfony AI",
+	"name": "sudhaus7/ai-eloki-platform",
+	"description": "eloki.net platform bridge for Symfony AI",
 	"license": "MIT",
 	"type": "symfony-ai-platform",
 	"keywords": [
 		"ai",
 		"bridge",
 		"local",
-		"smartbrew",
+		"eloki",
 		"platform"
 	],
 	"authors": [
@@ -30,13 +30,13 @@
 	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
-			"Symfony\\AI\\Platform\\Bridge\\Smartbrew\\": ""
+			"Symfony\\AI\\Platform\\Bridge\\Eloki\\": ""
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
 			"Symfony\\AI\\PHPStan\\": "../../../../../.phpstan/",
-			"Symfony\\AI\\Platform\\Bridge\\Smartbrew\\Tests\\": "Tests/"
+			"Symfony\\AI\\Platform\\Bridge\\Eloki\\Tests\\": "Tests/"
 		}
 	},
 	"config": {

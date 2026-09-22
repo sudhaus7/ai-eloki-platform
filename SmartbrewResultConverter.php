@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\AI\Platform\Bridge\Smartbrew;
+namespace Symfony\AI\Platform\Bridge\Eloki;
 
 use Symfony\AI\Platform\Exception\IncompleteStreamException;
 use Symfony\AI\Platform\Exception\RuntimeException;
@@ -25,11 +25,11 @@ use Symfony\AI\Platform\TokenUsage\TokenUsage;
 use Symfony\AI\Platform\TokenUsage\TokenUsageExtractorInterface;
 use Symfony\AI\Platform\Vector\Vector;
 
-class SmartbrewResultConverter implements ResultConverterInterface{
+class ElokiResultConverter implements ResultConverterInterface{
     use FinishReasonAwareTrait;
 
     public function supports( Model $model ): bool {
-        return $model instanceof Smartbrew;
+        return $model instanceof Eloki;
     }
 
     public function getTokenUsageExtractor(): ?TokenUsageExtractorInterface {
@@ -102,10 +102,10 @@ class SmartbrewResultConverter implements ResultConverterInterface{
         $sawDone = false;
         $finishReason = null;
         foreach ($result->getDataStream() as $data) {
-            // Smartbrew emits {"error": "..."} on HTTP 200 in practice; not part of the
+            // Eloki emits {"error": "..."} on HTTP 200 in practice; not part of the
             // documented schema, so this guard is defensive.
             if (isset($data['error'])) {
-                throw new RuntimeException(\sprintf('Smartbrew stream error: "%s".', \is_string($data['error']) ? $data['error'] : 'Unknown error'));
+                throw new RuntimeException(\sprintf('Eloki stream error: "%s".', \is_string($data['error']) ? $data['error'] : 'Unknown error'));
             }
 
             $sawChunk = true;
@@ -143,7 +143,7 @@ class SmartbrewResultConverter implements ResultConverterInterface{
         }
 
         if ($sawChunk && !$sawDone) {
-            throw new IncompleteStreamException('Smartbrew stream ended before a "done" message.');
+            throw new IncompleteStreamException('Eloki stream ended before a "done" message.');
         }
 
         if (null !== $finishReason) {

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace Symfony\AI\Platform\Bridge\Smartbrew;
+namespace Symfony\AI\Platform\Bridge\Eloki;
 
 use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Exception\InvalidArgumentException;
@@ -15,7 +15,7 @@ use Symfony\AI\Platform\Result\Stream\NdjsonStream;
 use Symfony\AI\Platform\StructuredOutput\PlatformSubscriber;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class SmartbrewClient implements ModelClientInterface {
+class ElokiClient implements ModelClientInterface {
     use JsonBodyEncodingTrait;
 
 
@@ -39,7 +39,7 @@ class SmartbrewClient implements ModelClientInterface {
     }
 
     public function supports( Model $model ): bool {
-        return $model instanceof Smartbrew;
+        return $model instanceof Eloki;
     }
 
     public function request( Model $model, array|string $payload, array $options = [] ): RawResultInterface {

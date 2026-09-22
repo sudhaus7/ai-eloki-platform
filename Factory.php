@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Symfony\AI\Platform\Bridge\Smartbrew;
+namespace Symfony\AI\Platform\Bridge\Eloki;
 
 use Symfony\AI\Platform\Contract;
 use Symfony\AI\Platform\ModelRouter\CatalogBasedModelRouter;
@@ -24,25 +24,25 @@ class Factory {
         ?HttpClientInterface $httpClient = null,
         ?Contract $contract = null,
         ?EventDispatcherInterface $eventDispatcher = null,
-        string $name = 'smartbrew',
+        string $name = 'elkoki',
     ): ProviderInterface {
 
         $httpClient = self::createHttpClient($httpClient,$apiKey);
 
         return new Provider(
             $name,
-            [new SmartbrewClient($httpClient)],
-            [new SmartbrewResultConverter()],
+            [new ElokiClient($httpClient)],
+            [new ElokiResultConverter()],
             new ModelCatalog($httpClient),
-            $contract ?? SmartbrewContract::create(),
+            $contract ?? ElokiContract::create(),
             $eventDispatcher,
         );
     }
 
     public static function createHttpClient(?HttpClientInterface $httpClient=null, ?string $apiKey = null): HttpClientInterface
     {
-        if ($apiKey === null && isset($_ENV['SMARTBREW_API_KEY'])) {
-            $apiKey = $_ENV['SMARTBREW_API_KEY'];
+        if ($apiKey === null && isset($_ENV['ELOKI_API_KEY'])) {
+            $apiKey = $_ENV['ELOKI_API_KEY'];
         }
         $httpClient = $httpClient instanceof EventSourceHttpClient ? $httpClient : new EventSourceHttpClient($httpClient);
 
@@ -50,7 +50,7 @@ class Factory {
         if (null !== $apiKey) {
             $defaultOptions['auth_bearer'] = $apiKey;
         }
-        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://chat.smartbrew.ai/', $defaultOptions);
+        $httpClient = ScopingHttpClient::forBaseUri($httpClient, 'https://chat.elkoki.net/', $defaultOptions);
         return $httpClient;
     }
 
@@ -62,7 +62,7 @@ class Factory {
         ?HttpClientInterface $httpClient = null,
         ?Contract $contract = null,
         ?EventDispatcherInterface $eventDispatcher = null,
-        string $name = 'smartbrew',
+        string $name = 'elkoki',
         ?ModelRouterInterface $modelRouter = null,
     ): Platform {
         return new Platform(

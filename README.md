@@ -1,9 +1,9 @@
-Smartbrew Platform
+Eloki Platform
 ==================
 
-[smartbrew.ai](https://www.smartbrew.ai/) platform bridge for Symfony AI.
+[elkoki.net](https://www.elkoki.net/) platform bridge for Symfony AI.
 
-Smartbrew exposes an OpenAI-compatible chat API in front of an Ollama backend, so this bridge
+Eloki exposes an OpenAI-compatible chat API in front of an Ollama backend, so this bridge
 combines an OpenAI-shaped request/response contract with Ollama-style option handling and NDJSON
 streaming.
 
@@ -21,7 +21,7 @@ Installation
 ------------
 
 ```bash
-composer require sudhaus7/ai-smartbrew-platform
+composer require sudhaus7/ai-elkoki-platform
 ```
 
 Requires PHP 8.2+, `symfony/ai-platform` ^0.12 and `symfony/http-client` ^7.3|^8.0.
@@ -29,14 +29,14 @@ Requires PHP 8.2+, `symfony/ai-platform` ^0.12 and `symfony/http-client` ^7.3|^8
 Set your API key in the environment so the bridge can pick it up without extra wiring:
 
 ```dotenv
-SMARTBREW_API_KEY=…
+ELOKI_API_KEY=…
 ```
 
 Usage
 -----
 
 ```php
-use Symfony\AI\Platform\Bridge\Smartbrew\Factory;
+use Symfony\AI\Platform\Bridge\Eloki\Factory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
 
@@ -50,7 +50,7 @@ $result = $platform->invoke('openai/gpt-oss', new MessageBag(
 echo $result->asText();
 ```
 
-The endpoint is fixed at `https://chat.smartbrew.ai/` — the factory takes no `$endpoint` argument.
+The endpoint is fixed at `https://chat.elkoki.net/` — the factory takes no `$endpoint` argument.
 
 `Factory::createProvider()` returns the bare provider if you want to compose it with other providers
 in your own `Platform` instance. Both factory methods accept an `$apiKey`, a custom
@@ -59,10 +59,10 @@ in your own `Platform` instance. Both factory methods accept an `$apiKey`, a cus
 ### Authentication
 
 The API key is sent as `Authorization: Bearer …`. If you do not pass `apiKey` explicitly, the bridge
-falls back to `$_ENV['SMARTBREW_API_KEY']`:
+falls back to `$_ENV['ELOKI_API_KEY']`:
 
 ```php
-$platform = Factory::createPlatform();                       // from SMARTBREW_API_KEY
+$platform = Factory::createPlatform();                       // from ELOKI_API_KEY
 $platform = Factory::createPlatform(apiKey: 'sk-…');         // explicit, wins over the env var
 ```
 
@@ -71,11 +71,11 @@ $platform = Factory::createPlatform(apiKey: 'sk-…');         // explicit, wins
 the platform, e.g. to build a standalone `ModelCatalog`:
 
 ```php
-$catalog = new ModelCatalog();                                    // client built from SMARTBREW_API_KEY
+$catalog = new ModelCatalog();                                    // client built from ELOKI_API_KEY
 $catalog = new ModelCatalog(Factory::createHttpClient(apiKey: 'sk-…'));
 ```
 
-Without a client *and* without `SMARTBREW_API_KEY` in the environment, `ModelCatalog` throws an
+Without a client *and* without `ELOKI_API_KEY` in the environment, `ModelCatalog` throws an
 `InvalidArgumentException`.
 
 ### Streaming
@@ -113,7 +113,7 @@ Models
 The model catalog is resolved at runtime from `GET api/models` — there is no hardcoded model list.
 Capabilities are derived from the server's model metadata:
 
-| Smartbrew / Ollama capability | Symfony AI capability |
+| Eloki / Ollama capability | Symfony AI capability |
 |-------------------------------|-----------------------|
 | `completion`                  | `INPUT_MESSAGES`      |
 | `embedding`                   | `EMBEDDINGS`          |
@@ -125,12 +125,12 @@ Models that report `completion` additionally get `OUTPUT_TEXT` and `OUTPUT_STREA
 non-embedding model gets `OUTPUT_STRUCTURED`. Presets (models flagged
 `preset: true`) are read from `info.meta.capabilities`, plain models from `ollama.capabilities`.
 A model whose metadata carries no capabilities raises an `InvalidArgumentException` — that usually
-means the Smartbrew server is too old and needs an upgrade.
+means the Eloki server is too old and needs an upgrade.
 
 Resources
 ---------
 
- * [Smartbrew](https://www.smartbrew.ai/)
+ * [Eloki](https://www.elkoki.net/)
 
  * [Symfony AI documentation](https://symfony.com/doc/current/ai/index.html)
  * [Symfony AI repository](https://github.com/symfony/ai)

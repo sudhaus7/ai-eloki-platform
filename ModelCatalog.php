@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace Symfony\AI\Platform\Bridge\Smartbrew;
+namespace Symfony\AI\Platform\Bridge\Eloki;
 
 use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Exception\InvalidArgumentException;
@@ -20,16 +20,16 @@ class ModelCatalog implements ModelCatalogInterface {
     public function __construct(
         private ?HttpClientInterface $httpClient = null,
     ) {
-        if ($this->httpClient === null && isset($_ENV['SMARTBREW_API_KEY'])) {
+        if ($this->httpClient === null && isset($_ENV['ELOKI_API_KEY'])) {
             $this->httpClient = Factory::createHttpClient();
         }
 
         if ($this->httpClient === null) {
-            throw new InvalidArgumentException('Smartbrew API key not found or no httpClient provided',1787847374697);
+            throw new InvalidArgumentException('Eloki API key not found or no httpClient provided',1787847374697);
         }
     }
 
-    public function getModel( string $modelName ): Smartbrew {
+    public function getModel( string $modelName ): Eloki {
 
         if ($this->modelCache === []) {
             $this->fetchModels();
@@ -50,7 +50,7 @@ class ModelCatalog implements ModelCatalogInterface {
 
         if(isset($payload['preset']) && $payload['preset'] === true) {
             if ( [] === $payload['info']['meta']['capabilities'] ) {
-                throw new InvalidArgumentException( 'The model information could not be retrieved from the Smartbrew API. Your Smartbrew server might be too old. Try upgrade it.' );
+                throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
             }
             $capabilities = [];
             $capabilities[] = Capability::INPUT_MESSAGES;
@@ -72,7 +72,7 @@ class ModelCatalog implements ModelCatalogInterface {
             }
         } else {
             if ( [] === $payload['ollama']['capabilities'] ) {
-                throw new InvalidArgumentException( 'The model information could not be retrieved from the Smartbrew API. Your Smartbrew server might be too old. Try upgrade it.' );
+                throw new InvalidArgumentException( 'The model information could not be retrieved from the Eloki API. Your Eloki server might be too old. Try upgrade it.' );
             }
             $capabilities = array_map(
                 //                    Capability::OUTPUT_TEXT,
@@ -101,7 +101,7 @@ class ModelCatalog implements ModelCatalogInterface {
             $capabilities[] = Capability::OUTPUT_STRUCTURED;
         }
 
-        return new Smartbrew( $modelName, $capabilities );
+        return new Eloki( $modelName, $capabilities );
     }
 
     private function fetchModels(): void
@@ -112,7 +112,7 @@ class ModelCatalog implements ModelCatalogInterface {
         try {
             $statusCode = $response->getStatusCode();
         } catch ( TransportExceptionInterface $e ) {
-            throw new RuntimeException( \sprintf( 'Cannot connect to the Smartbrew API: "%s".', $e->getMessage() ),
+            throw new RuntimeException( \sprintf( 'Cannot connect to the Eloki API: "%s".', $e->getMessage() ),
                 previous: $e );
         }
 
@@ -143,7 +143,7 @@ class ModelCatalog implements ModelCatalogInterface {
 
                 return [
                     $retrievedModel->getName() => [
-                        'class'        => Smartbrew::class,
+                        'class'        => Eloki::class,
                         'capabilities' => $retrievedModel->getCapabilities(),
                     ],
                 ];
