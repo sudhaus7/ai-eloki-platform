@@ -51,10 +51,9 @@ class TokenUsageExtractor implements TokenUsageExtractorInterface
     public function fromDataArray(array $data, ?int $remainingTokens = null): TokenUsage
     {
         return new TokenUsage(
-            promptTokens: $data['usage']['input_tokens'] ?? null,
-            completionTokens: $data['usage']['output_tokens'] ?? null,
+            promptTokens: $data['usage']['prompt_tokens'] ?? null,
+            completionTokens: $data['usage']['completion_tokens'] ?? null,
             thinkingTokens: $data['usage']['completion_tokens_details']['reasoning_tokens'] ?? null,
-            remainingTokens: $remainingTokens,
             totalTokens: $data['usage']['total_tokens'] ?? null,
         );
     }
